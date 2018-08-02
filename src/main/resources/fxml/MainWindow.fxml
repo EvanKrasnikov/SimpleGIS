@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.esri.arcgisruntime.mapping.view.MapView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.geographer29.gis.controllers.MainController">
+
+    <center>
+      <MapView fx:id="mapView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+
+   <left>
+      <TableView fx:id="table" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="layersNameColumn" minWidth="200.0" prefWidth="200.0" text="Layers"/>
+          <TableColumn fx:id="isActiveColumn" minWidth="100.0" prefWidth="100.0" text="Active" />
+        </columns>
+      </TableView>
+   </left>
+
+   <top>
+      <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+          <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
+              <MenuItem fx:id="menuItemClose" mnemonicParsing="false" onAction="#performClose" text="Close" />
+              <MenuItem fx:id="menuItemImport" mnemonicParsing="false" onAction="#performImport" text="Import" />
+          </Menu>
+
+          <Menu fx:id="menuEdit" mnemonicParsing="false" text="Edit">
+              <MenuItem fx:id="menuItemDelete" mnemonicParsing="false" onAction="#performDelete" text="Delete" />
+          </Menu>
+
+          <Menu fx:id="menuTools" mnemonicParsing="false" text="Tools">
+              <MenuItem fx:id="menuItemSupervisedClassification" mnemonicParsing="false" onAction="#performSupervisedClassification" text="SupervisedClassification" />
+          </Menu>
+
+          <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
+              <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#performAbout" text="About" />
+          </Menu>
+      </MenuBar>
+   </top>
+
+</BorderPane>
