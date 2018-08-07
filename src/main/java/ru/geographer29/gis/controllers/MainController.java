@@ -4,31 +4,21 @@ import com.esri.arcgisruntime.mapping.ArcGISMap;
 import com.esri.arcgisruntime.mapping.LayerList;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Callback;
 import ru.geographer29.gis.app.App;
+import ru.geographer29.gis.config.DefaultConfig;
 import ru.geographer29.gis.model.logic.Import;
 import ru.geographer29.gis.model.logic.Layer;
+import ru.geographer29.gis.model.logic.LayerTable;
+import ru.geographer29.gis.util.FxmlLoader;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import static ru.geographer29.gis.config.DefaultConfig.setupMap;
-import static ru.geographer29.gis.model.logic.LayerTable.setupTable;
-
-public class MainController extends App implements Initializable{
-
-    @FXML private MapView mapView = new MapView();
+public class MainController extends App {
+    @FXML private MapView mapView;
     @FXML private BorderPane borderPane;
-    @FXML private TableView<Layer> table = new TableView<>();
+    @FXML private TableView<Layer> tableView;
     @FXML private TableColumn<Layer, String> layersNameColumn;
     @FXML private TableColumn<Layer, Boolean> isActiveColumn;
     @FXML private MenuBar menuBar;
@@ -42,34 +32,27 @@ public class MainController extends App implements Initializable{
     @FXML private MenuItem menuItemSupervisedClassification;
     @FXML private MenuItem menuItemAbout;
 
-    private ArcGISMap map = setupMap();
+    private ArcGISMap map;
     private LayerList layersMap;
-    private ObservableList<Layer> layersTable = table.getItems();
+    private ObservableList<Layer> layersTable;
 
-    protected TableView<Layer> getTable() {
-        return table;
-    }
-
-    protected ObservableList<Layer> getLayersTable() {
-        return layersTable;
+    public MainController(){
+        FxmlLoader.loadFxml(this,FxmlLoader.MAIN);
+        map = DefaultConfig.setupMap();
+        mapView.setMap(map);
+        layersTable = tableView.getItems();
+        LayerTable.setupTable(tableView);
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         map.getOperationalLayers().clear();
         mapView.dispose();
         Platform.exit();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        mapView.setMap(map);
-        setupTable(table,layersNameColumn,isActiveColumn);
-        System.out.println("Initialize!");
-    }
-
     @FXML
-    private void performClose() throws Exception{
+    private void performClose() {
         stop();
     }
 
@@ -79,17 +62,17 @@ public class MainController extends App implements Initializable{
     }
 
     @FXML
-    private void performDelete(){
+    private void performDelete() {
         //todo
     }
 
     @FXML
-    private void performSupervisedClassification(){
+    private void performSupervisedClassification() {
         //todo
     }
 
     @FXML
-    private void performAbout(){
+    private void performAbout() {
         //todo
     }
 
