@@ -1,84 +1,42 @@
 package ru.geographer29.gis.util;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URL;
 
 public class FxmlLoader {
-    public static final String MAIN = "/fxml/MainWindow.fxml";
+    private static final Logger logger = LogManager.getLogger();
+    public final static String MAIN = "MainWindow.fxml";
+    public final static String MENU = "";
 
-    interface Loader{
-        URL getURL();
+    private interface Loadable{
+        URL loadUrl();
     }
 
-    private static Parent getParent(String fxmlPath){
-        Parent root;
+    private static URL getUrl(String fxml) {
 
-        class LoaderImpl implements Loader{
+        class LoadableImpl implements Loadable {
             @Override
-            public URL getURL() {
-                return getClass().getResource(fxmlPath);
+            public URL loadUrl() {
+                return getClass().getResource(fxml);
             }
         }
 
-        URL url = new LoaderImpl().getURL();
+        return new LoadableImpl().loadUrl();
+    }
 
-        //проверка загрузки FXML
+    public static void loadFxml(Object controller, String fxml) {
+        FXMLLoader loader = new FXMLLoader(getUrl(fxml));
+        loader.setRoot(controller);
+        loader.setController(controller);
+
         try {
-            root = FXMLLoader.load(url);
+            loader.load();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error on FXML loading!");
+            logger.fatal("FXML has not loaded!");
         }
-
-        if (root != null){
-            System.out.println("!!!! Success !!!!");
-        }
-
-        return root;
-    }
-
-    public static void loadFXML(Class <? extends Stage> stageGen, String fxmlPath){
-        Parent root = getParent(fxmlPath);
-
-        if (stageGen.isInstance(Stage.class)){
-            try {
-                Constructor sceneConstructor = Scene.class.getDeclaredConstructor(Parent.class);
-                Scene scene = (Scene)sceneConstructor.newInstance(root);
-                scene.setRoot(root);
-
-                Stage stage = stageGen.newInstance();
-                stage.setScene(scene);
-                stage.show();
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException  | InstantiationException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        if (stageGen.isInstance(Node.class)){
-            try {
-                Method method = stageGen.getMethod("getScene");
-                Scene scene = (Scene)method.invoke(stageGen);
-                scene.setRoot(root);
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void loadFXMLwS(Stage stage, String fxmlPath){
-        Parent root = getParent(fxmlPath);
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 }
