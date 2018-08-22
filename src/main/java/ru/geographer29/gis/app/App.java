@@ -3,20 +3,17 @@ package ru.geographer29.gis.app;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import static ru.geographer29.gis.util.FxmlLoader.MAIN;
-import static ru.geographer29.gis.util.FxmlLoader.loadFXMLwS;
+import ru.geographer29.gis.controllers.MainController;
 
 public class App extends Application {
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-        //loadFXML(primaryStage.getClass(), MAIN);
-        loadFXMLwS(primaryStage,MAIN);
 
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setFullScreen(true);
         primaryStage.setTitle("Simple GIS");
 
+        new MainController();
     }
 
     public static void main(String[] args) {
