@@ -7,12 +7,12 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import ru.geographer29.gis.app.App;
 import ru.geographer29.gis.config.DefaultConfig;
 import ru.geographer29.gis.model.logic.Import;
 import ru.geographer29.gis.model.logic.Layer;
-import ru.geographer29.gis.model.logic.LayerTable;
 import ru.geographer29.gis.util.FxmlLoader;
 
 public class MainController extends App {
@@ -40,8 +40,8 @@ public class MainController extends App {
         FxmlLoader.loadFxml(this,FxmlLoader.MAIN);
         map = DefaultConfig.setupMap();
         mapView.setMap(map);
-        layersTable = tableView.getItems();
-        LayerTable.setupTable(tableView);
+        layersNameColumn.setCellValueFactory(new PropertyValueFactory<Layer,String>("Layers"));
+        isActiveColumn.setCellValueFactory(new PropertyValueFactory<Layer,Boolean>("Visible"));
     }
 
     @Override
