@@ -11,16 +11,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import ru.geographer29.gis.app.App;
 import ru.geographer29.gis.config.DefaultConfig;
-import ru.geographer29.gis.model.logic.Import;
-import ru.geographer29.gis.model.logic.Layer;
+import ru.geographer29.gis.model.logic.imports.Import;
+import ru.geographer29.gis.model.logic.LayerEntry;
 import ru.geographer29.gis.util.FxmlLoader;
 
 public class MainController extends App {
     @FXML private MapView mapView;
     @FXML private BorderPane borderPane;
-    @FXML private TableView<Layer> tableView;
-    @FXML private TableColumn<Layer, String> layersNameColumn;
-    @FXML private TableColumn<Layer, Boolean> isActiveColumn;
+    @FXML private TableView<LayerEntry> tableView;
+    @FXML private TableColumn<LayerEntry, String> layersNameColumn;
+    @FXML private TableColumn<LayerEntry, Boolean> isActiveColumn;
     @FXML private MenuBar menuBar;
     @FXML private Menu menuFile;
     @FXML private Menu menuEdit;
@@ -34,14 +34,14 @@ public class MainController extends App {
 
     private ArcGISMap map;
     private LayerList layersMap;
-    private ObservableList<Layer> layersTable;
+    private ObservableList<LayerEntry> layersTable;
 
     public MainController(){
         FxmlLoader.loadFxml(this,FxmlLoader.MAIN);
         map = DefaultConfig.setupMap();
         mapView.setMap(map);
-        layersNameColumn.setCellValueFactory(new PropertyValueFactory<Layer,String>("Layers"));
-        isActiveColumn.setCellValueFactory(new PropertyValueFactory<Layer,Boolean>("Visible"));
+        layersNameColumn.setCellValueFactory(new PropertyValueFactory<LayerEntry,String>("Layers"));
+        isActiveColumn.setCellValueFactory(new PropertyValueFactory<LayerEntry,Boolean>("Visible"));
     }
 
     @Override

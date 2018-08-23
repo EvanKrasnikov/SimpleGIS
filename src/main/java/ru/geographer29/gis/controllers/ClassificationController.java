@@ -7,14 +7,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressBar;
-import ru.geographer29.gis.model.logic.Layer;
+import ru.geographer29.gis.model.logic.LayerEntry;
 import ru.geographer29.gis.util.FxmlLoader;
 import ru.geographer29.gis.util.getter.Getters;
 
 public class ClassificationController {
     @FXML private Button startClassificationButton;
-    @FXML private ComboBox<Layer> rasterComboBox;
-    @FXML private ComboBox<Layer> vectorComboBox;
+    @FXML private ComboBox<LayerEntry> rasterComboBox;
+    @FXML private ComboBox<LayerEntry> vectorComboBox;
     @FXML private ProgressBar progressBar;
 
     public ClassificationController(){
@@ -23,10 +23,10 @@ public class ClassificationController {
 
     @FXML
     private void filterRasters(){
-        ObservableList<Layer> obslist = Getters
+        ObservableList<LayerEntry> obslist = Getters
                 .getTableView()
                 .getItems()
-                .filtered((Layer layer) -> {
+                .filtered((LayerEntry layer) -> {
                     if (layer.TYPE == RASTER)
                         return true;
                     return false;
@@ -36,10 +36,10 @@ public class ClassificationController {
 
     @FXML
     private void filterVectors(){
-        ObservableList<Layer> obslist = Getters
+        ObservableList<LayerEntry> obslist = Getters
                 .getTableView()
                 .getItems()
-                .filtered((Layer layer) -> {
+                .filtered((LayerEntry layer) -> {
                     if (layer.TYPE == VECTOR)
                         return true;
                     return false;
@@ -49,8 +49,8 @@ public class ClassificationController {
 
     @FXML
     private void startClassification(){
-        Layer raster = rasterComboBox.getSelectionModel().getSelectedItem().getFile().getAbsolutePath();
-        Layer vector = vectorComboBox.getSelectionModel().getSelectedItem();
+        LayerEntry raster = rasterComboBox.getSelectionModel().getSelectedItem().getFile().getAbsolutePath();
+        LayerEntry vector = vectorComboBox.getSelectionModel().getSelectedItem();
         Raster y;
         RasterLayer rasterLayer = new RasterLayer(
                 new Raster(rasterComboBox
