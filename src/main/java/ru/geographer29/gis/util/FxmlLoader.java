@@ -3,6 +3,8 @@ package ru.geographer29.gis.util;
 import javafx.fxml.FXMLLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.geographer29.gis.exception.FxmlLoadException;
+
 import java.io.IOException;
 import java.net.URL;
 
@@ -11,20 +13,15 @@ public class FxmlLoader {
     public final static String MAIN = "MainWindow.fxml";
     public final static String MENU = "";
 
-    private interface Loadable{
-        URL loadUrl();
-    }
-
     private static URL getUrl(String fxml) {
 
-        class LoadableImpl implements Loadable {
-            @Override
-            public URL loadUrl() {
+        class Loader {
+            private URL loadUrl(){
                 return getClass().getResource(fxml);
             }
         }
 
-        return new LoadableImpl().loadUrl();
+        return new Loader().loadUrl();
     }
 
     public static void loadFxml(Object controller, String fxml) {
@@ -35,7 +32,7 @@ public class FxmlLoader {
         try {
             loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new FxmlLoadException(e.getMessage());
             logger.fatal("FXML has not loaded!");
         }
     }
