@@ -12,6 +12,7 @@ public class FxmlLoader {
     private static final Logger logger = LogManager.getLogger();
     public final static String MAIN = "MainWindow.fxml";
     public final static String MENU = "";
+    public final static String CLASSIFICATION = "ClassificationWindow.fxml";
 
     private static URL getUrl(String fxml) {
 
