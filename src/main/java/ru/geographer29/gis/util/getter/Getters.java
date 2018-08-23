@@ -4,7 +4,7 @@ import com.esri.arcgisruntime.mapping.view.MapView;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import ru.geographer29.gis.controllers.MainController;
-import ru.geographer29.gis.model.logic.Layer;
+import ru.geographer29.gis.model.logic.LayerEntry;
 
 public class Getters {
 
@@ -13,13 +13,13 @@ public class Getters {
                 .get(MainController.class,"mapView");
     }
 
-    public static TableView<Layer> getTableView(){
-        return new GenericGetter<TableView<Layer>>()
+    public static TableView<LayerEntry> getTableView(){
+        return new GenericGetter<TableView<LayerEntry>>()
                 .get(MainController.class,"tableView");
     }
 
-    public static ObservableList<Layer> getLayersTable(){
-        return new GenericGetter<ObservableList<Layer>>()
+    public static ObservableList<LayerEntry> getLayersTable(){
+        return new GenericGetter<ObservableList<LayerEntry>>()
                 .get(ObservableList.class,"layersTable");
     }
 
