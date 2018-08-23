@@ -1,51 +1,60 @@
 package ru.geographer29.gis.model.logic;
 
-import com.esri.arcgisruntime.data.ShapefileFeatureTable;
-import com.esri.arcgisruntime.layers.FeatureLayer;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.io.File;
 
 public class Layer {
     private File file;
-    private boolean isActive;
-    private String name;
-    private FeatureLayer featureLayer;
+    private SimpleStringProperty name;
+    private SimpleBooleanProperty visible;
+
+    public enum TYPE{
+        RASTER,
+        VECTOR
+    }
 
     public Layer(File file) {
         this.file = file;
-        isActive = false;
-        name = file.getName();
-
-        ShapefileFeatureTable shapefileFeatureTable = new ShapefileFeatureTable(file.getAbsolutePath());
-        featureLayer = new FeatureLayer(shapefileFeatureTable);
+        name = new SimpleStringProperty(file.getName());
+        visible = new SimpleBooleanProperty(false);
     }
 
     public File getFile() {
         return file;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public void setFile(File file) {
+        this.file = file;
     }
 
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    public String getName() {
+    public SimpleStringProperty nameProperty() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name.get();
     }
 
-    public FeatureLayer getFeatureLayer() {
-        return featureLayer;
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public SimpleBooleanProperty visibleProperty() {
+        return visible;
+    }
+
+    public boolean getVisible() {
+        return visible.get();
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible.set(visible);
     }
 
     @Override
     public String toString() {
-        return name + "   " + isActive;
+        return name + "   " + visible;
     }
 }
