@@ -1,21 +1,23 @@
 package ru.geographer29.gis.model.logic;
 
+import com.esri.arcgisruntime.layers.Layer;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.File;
 
-public class Layer {
+public class LayerEntry {
     private File file;
     private SimpleStringProperty name;
     private SimpleBooleanProperty visible;
+    private Layer layer;
 
     public enum TYPE{
         RASTER,
         VECTOR
     }
 
-    public Layer(File file) {
+    public LayerEntry(File file) {
         this.file = file;
         name = new SimpleStringProperty(file.getName());
         visible = new SimpleBooleanProperty(false);
@@ -51,6 +53,14 @@ public class Layer {
 
     public void setVisible(boolean visible) {
         this.visible.set(visible);
+    }
+
+    public Layer getLayer() {
+        return layer;
+    }
+
+    public void setLayer(Layer layer) {
+        this.layer = layer;
     }
 
     @Override
